@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  font-family: 'Opensans',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@font-face {
+  font-family: Bebas;
+  src: url('./fonts/bebas-neue-bold.woff2') format('woff2');
+  font-weight: bold;
+}
+@font-face {
+  font-family: Opensans;
+  src: url('./fonts/open-sans-v17-latin_cyrillic-regular.woff2') format('woff2');
+  font-weight: normal;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Bebas', sans-serif;
+  margin: 0;
+}
+
