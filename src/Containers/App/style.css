@@ -1,5 +1,8 @@
 .App {
+  max-width: 1440px;
+  min-width: 320px;
   height: 100vh;
-  text-align: center;
-  background-color: #224680;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
