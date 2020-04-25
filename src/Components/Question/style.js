@@ -11,8 +11,20 @@ export const Wrap = styled.div`
   border-radius: 4px;
 `;
 
+export const TitleWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const Title = styled.h1`
   margin: 0;
+`;
+
+export const Time = styled.p`
+  margin: 0;
+  font-family: 'Bebas', sans-serif;
+  font-size: 40px;
+  color: #f7aa41;
 `;
 
 export const AnswerWrap = styled.div`
@@ -49,15 +61,21 @@ export const BtnRow = styled.div`
 `;
 
 export const NextBtn = styled.button`
-  width: 200px;
+  width: 225px;
+  margin-top: 15px;
   padding-bottom: 0;
-  line-height: 32px;
+  line-height: 40px;
   font-family: 'Bebas', sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   color: #fff;
   background-color: #f7aa41;
   border: none;
+  border-radius: 4px;
   outline: none;
   cursor: pointer;
+  transition: all .2s linear;
+  :hover {
+     background-color: #b37017;
+  }
 `;
 

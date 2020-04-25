@@ -6,12 +6,22 @@ import {
   Answer,
   BtnRow,
   NextBtn,
+  TitleWrap,
+  Time,
 } from "./style";
 
 
 class Question extends Component {
+  questionTimer = {};
+  timer = {};
   state = {
     choose: [],
+    time: 120,
+  }
+
+  componentDidMount() {
+    // setTimeout(this.props.nextQuestions, 10000);
+    // this.timer = setInterval(() => this.setState({time: this.state.time - 1}), 1000);
   }
 
   chooseAnswer = (id) => {
@@ -26,12 +36,19 @@ class Question extends Component {
     }
   }
 
+  nextHandler = () => {
+    this.props.nextQuestions(this.state.choose);
+    this.setState({choose: []});
+  }
+
   render() {
     const {
-      choose
+      choose,
+      time,
     } = this.state;
     const {
-      data
+      data,
+      nextQuestions,
     } = this.props;
 
   console.log(data)
@@ -39,21 +56,24 @@ class Question extends Component {
 
   return (
       <Wrap>
-        <Title>{data.text}</Title>
+        <TitleWrap>
+          <Title>{data.text}</Title>
+          <Time>{time}</Time>
+        </TitleWrap>
         <AnswerWrap>
           {data.responses.map(item => {
             return (
                 <Answer
                     key={item.id}
-                    active={choose.includes(item.id)}
-                    onClick={() => this.chooseAnswer(item.id)}
+                    active={choose.includes(item.response)}
+                    onClick={() => this.chooseAnswer(item.response)}
                 >
                   <p>{item.response}</p>
                 </Answer>
             )
           })}
           <BtnRow>
-            <NextBtn>
+            <NextBtn onClick={this.nextHandler}>
               Дальше
             </NextBtn>
           </BtnRow>
