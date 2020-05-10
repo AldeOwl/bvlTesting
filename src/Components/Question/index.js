@@ -21,7 +21,11 @@ class Question extends Component {
 
   componentDidMount() {
     // setTimeout(this.props.nextQuestions, 10000);
-    // this.timer = setInterval(() => this.setState({time: this.state.time - 1}), 1000);
+    this.timer = setInterval(() => this.setState({time: this.state.time - 1}), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   chooseAnswer = (id) => {
@@ -38,7 +42,8 @@ class Question extends Component {
 
   nextHandler = () => {
     this.props.nextQuestions(this.state.choose);
-    this.setState({choose: []});
+    this.setState({choose: [], time: 120});
+    // clearInterval(this.timer);
   }
 
   render() {
@@ -51,8 +56,8 @@ class Question extends Component {
       nextQuestions,
     } = this.props;
 
-  console.log(data)
   if (!data) return false;
+  if(time === 0) this.nextHandler();
 
   return (
       <Wrap>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './style.css';
-import {getTest} from '../../network/index';
+import {getTest, sendTestResult} from '../../network/index';
 import Question from '../../Components/Question';
 
 class App extends Component {
@@ -9,6 +9,7 @@ class App extends Component {
     answers: {},
     target: 0
   }
+
   componentDidMount() {
     getTest()
         .then(res => this.setState({questions: [...res]}));
@@ -19,24 +20,36 @@ class App extends Component {
     newAnswers[this.state.questions[this.state.target].id] = arr;
     this.setState({answers: newAnswers});
     this.setState({target: this.state.target + 1});
+
+    if (this.state.target === this.state.questions.length - 1) {
+      sendTestResult(this.state.answers);
+    }
   }
 
   render() {
-  const {
-    questions,
-    target,
-  } = this.state;
+    const {
+      questions,
+      target,
+    } = this.state;
 
-  console.log(questions);
-  console.log(this.state.answers);
-  return (
-    <div className="App">
-      <Question
-          data={questions[target]}
-          nextQuestions={this.nextQuestions}
-      />
-    </div>
-  );
+    if (target === questions.length) {
+      return (
+          <div className="App">
+            <div className='EndTest'>
+              <p>тест завершен</p>
+            </div>
+          </div>
+      )
+    }
+
+    return (
+        <div className="App">
+          <Question
+              data={questions[target]}
+              nextQuestions={this.nextQuestions}
+          />
+        </div>
+    );
   }
 }
 
