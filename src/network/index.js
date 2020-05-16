@@ -1,8 +1,13 @@
 const baseUrl = 'https://myvolley.ru/api';
 
+const checkUrl = () => {
+  let searchParams = new URLSearchParams(window.location.search);
+  let id = searchParams.get('id');
+  return parseInt(id);
+};
 
 async function getData(url) {
-  const res = await fetch(`${baseUrl}${url}`);
+  const res = await fetch(`${baseUrl}${url}${checkUrl()}`);
   if (!res.ok) {
     throw new Error(`Could not fetch ${url} ${res.status}`)
   }
@@ -25,5 +30,5 @@ export async function sendTestResult(body) {
 };
 
 export async function getTest() {
-  return getData(`/test?id=225`);
+  return getData(`/test?id=`);
 }

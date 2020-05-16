@@ -31,6 +31,8 @@ class App extends Component {
       questions,
       target,
     } = this.state;
+    console.log(questions.length);
+    console.log(target);
 
     if (target === questions.length) {
       return (

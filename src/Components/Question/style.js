@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Wrap = styled.div`
   width: 700px;
-  height: 400px;
+  min-height: 400px;
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -16,8 +16,10 @@ export const TitleWrap = styled.div`
   justify-content: space-between;
 `;
 
-export const Title = styled.h1`
-  margin: 0;
+export const Title = styled.p`
+  max-width: 90%;
+  margin: 0 0 10px 0;
+  font-size: 20px;
 `;
 
 export const Time = styled.p`
@@ -35,9 +37,9 @@ export const AnswerWrap = styled.div`
 
 export const Answer = styled.div`
   width: 100%;
-  height: 40px;
+  min-height: 40px;
   margin-bottom: 14px;
-  padding: 0 16px;
+  padding: 5px 16px;
   display: flex;
   align-items: center;
   background-color: ${props => props.active ? '#5CB85C' : '#2751e8'};

@@ -16,12 +16,19 @@ class Question extends Component {
   timer = {};
   state = {
     choose: [],
-    time: 120,
+    time: -1,
   }
 
   componentDidMount() {
+    this.setTimer(this.props.data.difficulty);
     // setTimeout(this.props.nextQuestions, 10000);
     this.timer = setInterval(() => this.setState({time: this.state.time - 1}), 1000);
+  }
+
+  componentDidUpdate(prevProps) {
+    if(prevProps.data.id !== this.props.data.id){
+      this.setTimer(this.props.data.difficulty);
+    }
   }
 
   componentWillUnmount() {
@@ -40,9 +47,15 @@ class Question extends Component {
     }
   }
 
+  setTimer = (val) => {
+    if(val === 0) this.setState({time: 60});
+    if(val === 1) this.setState({time: 90});
+    if(val === 2) this.setState({time: 120});
+  }
+
   nextHandler = () => {
     this.props.nextQuestions(this.state.choose);
-    this.setState({choose: [], time: 120});
+    this.setState({choose: []});
     // clearInterval(this.timer);
   }
 
@@ -53,7 +66,6 @@ class Question extends Component {
     } = this.state;
     const {
       data,
-      nextQuestions,
     } = this.props;
 
   if (!data) return false;
