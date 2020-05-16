@@ -15,7 +15,7 @@ async function getData(url) {
 }
 
 export async function sendTestResult(body) {
-  const url = `${baseUrl}/test?id=225&result=`;
+  const url = `${baseUrl}/test?id=${checkUrl()}&result=`;
   const reqOpts = {
     method: 'POST',
     headers: {
