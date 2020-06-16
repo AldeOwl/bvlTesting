@@ -1,12 +1,11 @@
 import styled from "styled-components";
 
 export const Wrap = styled.div`
-  width: 700px;
+  width: 800px;
   min-height: 200px;
   padding: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   background-color: #fff;
   border-radius: 4px;
 `;
@@ -14,7 +13,6 @@ export const Wrap = styled.div`
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
 `;
 
 export const Text = styled.p`
@@ -29,7 +27,7 @@ export const BtnRow = styled.div`
 `;
 
 export const NextBtn = styled.button`
-  width: 225px;
+  min-width: 225px;
   margin-top: 15px;
   padding-bottom: 0;
   line-height: 40px;
