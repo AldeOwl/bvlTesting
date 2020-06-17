@@ -3,6 +3,7 @@ import {
   Wrap,
   Content,
   Text,
+  TextTitle,
   BtnRow,
   NextBtn,
 } from "./style";
@@ -10,12 +11,12 @@ import {
 
 class Introduction extends Component {
   state = {
-    page: 2,
+    page: 1,
   }
 
   nextHandler = () => {
-    this.props.nextQuestions(this.state.choose);
-    this.setState({ choose: [] });
+    if (this.state.page === 3) this.props.setStep('test');
+    this.setState({ page: this.state.page + 1 });
   }
 
   render() {
@@ -27,9 +28,9 @@ class Introduction extends Component {
       <Wrap>
         {page === 1 &&
           <Content>
-            <Text>
+            <TextTitle>
               Привет, ИМЯ
-        </Text>
+        </TextTitle>
             <Text>
               В 2020 году Береговая Волейбольная Лига отмечает юбилей. 25 лет мы организуем турниры и события для любителей волейбола со всего мира. А насколько хорошо ты знаешь лигу?
           </Text>
@@ -72,6 +73,27 @@ class Introduction extends Component {
             <BtnRow>
               <NextBtn onClick={this.nextHandler}>
                 Понятно. А как я узнаю свой результат?
+            </NextBtn>
+            </BtnRow>
+          </Content>
+        }
+        {page === 3 &&
+          <Content>
+            <Text>
+              За правильный ответ мы дадим тебе 1 балл. За правильный, но не полный - 0,5 балла, за неправильный ответ ты не получишь ничего.
+              </Text>
+            <Text>
+              Всего будет 25 вопросов, по одному вопросу за год жизни БВЛ.
+              </Text>
+            <Text>
+              Как только ты ответишь на все вопросы мы покажем на экране твой результат в баллах и время затраченное на все ответы и сразу опубликуем их на нашем сайте, чтобы ты мог сравнить себя с другими участниками. А детализацию ответов по каждому вопросу мы покажем только тебе.
+              </Text>
+            <Text>
+              Президент БВЛ, его жена и создатели программы не принимают участие в этой викторине.
+              </Text>
+            <BtnRow>
+              <NextBtn onClick={this.nextHandler}>
+                Поехали!
             </NextBtn>
             </BtnRow>
           </Content>

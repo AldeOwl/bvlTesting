@@ -32,3 +32,11 @@ export async function sendTestResult(body) {
 export async function getTest() {
   return getData(`/test?id=`);
 }
+
+export async function getUserName() {
+  const res = await fetch(`${baseUrl}/util?request=user`);
+  if (!res.ok) {
+    throw new Error(`Could not fetch ${res.status}`)
+  }
+  return await res.json();
+}

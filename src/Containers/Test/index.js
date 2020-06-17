@@ -4,17 +4,19 @@ import {
 } from './style';
 import { getTest, sendTestResult } from '../../network/index';
 import Question from '../../Components/Question';
+import Loader from '../../Components/Spinner/loader';
 
 class Test extends Component {
   state = {
     questions: [],
     answers: {},
-    target: 0
+    target: 0,
+    isLoading: true,
   }
 
   componentDidMount() {
     getTest()
-      .then(res => this.setState({ questions: [...res] }));
+      .then(res => this.setState({ questions: [...res], isLoading: false }));
   }
 
   nextQuestions = (arr) => {
@@ -32,7 +34,14 @@ class Test extends Component {
     const {
       questions,
       target,
+      isLoading,
     } = this.state;
+
+    if (isLoading) {
+      return (
+        <Loader />
+      )
+    }
 
     if (target === questions.length) {
       return (

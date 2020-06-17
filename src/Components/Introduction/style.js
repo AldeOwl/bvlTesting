@@ -20,6 +20,11 @@ export const Text = styled.p`
   font-size: 18px;
 `;
 
+export const TextTitle = styled.h1`
+  margin: 16px;
+  font-size: 25px;
+`;
+
 export const BtnRow = styled.div`
   width: 100%;
   display: flex;
