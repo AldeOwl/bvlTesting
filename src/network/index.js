@@ -29,9 +29,20 @@ export async function sendTestResult(body) {
 
 };
 
-export async function getTest() {
-  return getData(`/test?id=`);
-}
+export async function authorization(body) {
+  const url = 'https://myvolley.ru/servlet/admins';
+  const reqOpts = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  };
+
+  return await fetch(url, reqOpts);
+};
+
 
 export async function getUserName() {
   const res = await fetch(`${baseUrl}/util?request=user`);
@@ -39,4 +50,8 @@ export async function getUserName() {
     throw new Error(`Could not fetch ${res.status}`)
   }
   return await res.json();
+}
+
+export async function getTest() {
+  return getData(`/test?id=`);
 }
