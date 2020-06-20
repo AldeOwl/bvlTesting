@@ -4,7 +4,7 @@ import Login from '../../Components/Login';
 import Test from '../Test';
 import Introduction from '../../Components/Introduction';
 import Loader from '../../Components/Spinner/loader';
-import { getUserName, authorization } from '../../network/index';
+import { getUserName, authorization, getTestInfo, getTestResult } from '../../network/index';
 
 
 class App extends Component {
@@ -14,11 +14,15 @@ class App extends Component {
     name: null,
     step: 'start',
     id: '',
+    startTime: null,
+    endTime: null,
   }
 
   componentDidMount() {
     this.getName();
     this.checkTestID();
+    getTestInfo().then(res => console.log(res))
+    getTestResult().then(res => console.log(res))
   }
 
   checkTestID = () => {
@@ -27,8 +31,8 @@ class App extends Component {
     this.setState({ id: parseInt(id) });
   }
 
-  getAuth = (event, body) => {
-    event.preventDefault();
+  getAuth = (e, body) => {
+    e.preventDefault();
     authorization(body);
     this.getName();
   }
@@ -42,6 +46,10 @@ class App extends Component {
           this.setState({ isLoading: false });
         }
       })
+  }
+
+  getStartTime = () => {
+
   }
 
   stepHandler = (step) => {

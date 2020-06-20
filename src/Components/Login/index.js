@@ -10,12 +10,12 @@ import {
 
 class Login extends Component {
   state = {
-    username: 'davnsk777@gmail.com',
-    pass: 'volley1987'
+    username: '',
+    pass: ''
   }
 
-  inputHandler = (val) => {
-
+  inputHandler = (key, val) => {
+    this.setState({ [key]: val })
   }
 
   render() {
@@ -30,33 +30,36 @@ class Login extends Component {
 
     return (
       <Wrap>
-        <form>
+        <form onSubmit={(e) => getAuth(e, { login: username, password: pass })}>
           <RowInputWrap>
             <Input
               type="text"
-              name="username"
+              name="login"
+              id='login'
               value={username}
-            // onChange={e => this.setCredentials('username', e.target.value)}
+              autoComplete={'no'}
+              onChange={e => this.inputHandler('username', e.target.value)}
             />
-            <InputLabel htmlFor="username">Логин</InputLabel>
+            <InputLabel htmlFor="login">Логин</InputLabel>
           </RowInputWrap>
           <RowInputWrap>
             <Input
               type="password"
-              name="pass"
+              name="password"
+              id='password'
               value={pass}
-            // onChange={e => this.setCredentials('password', e.target.value)}
+              autoComplete='off'
+              onChange={e => this.inputHandler('pass', e.target.value)}
             />
-            <InputLabel htmlFor="pass">Пароль</InputLabel>
+            <InputLabel htmlFor="password">Пароль</InputLabel>
           </RowInputWrap>
           <LoginBtn
             type="submit"
-            onClick={(e) => getAuth(e, { login: username, password: pass })}
           >
             Войти
           </LoginBtn>
         </form>
-      </Wrap>
+      </Wrap >
     )
   }
 

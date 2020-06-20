@@ -6,8 +6,15 @@ const checkUrl = () => {
   return parseInt(id);
 };
 
-async function getData(url) {
-  const res = await fetch(`${baseUrl}${url}${checkUrl()}`);
+async function getData(url, param) {
+  let request = '';
+  const id = checkUrl();
+  param ?
+    request = `${baseUrl}${url}${id}${param}`
+    :
+    request = `${baseUrl}${url}${id}`;
+
+  const res = await fetch(request);
   if (!res.ok) {
     throw new Error(`Could not fetch ${url} ${res.status}`)
   }
@@ -34,10 +41,10 @@ export async function authorization(body) {
   const reqOpts = {
     method: 'POST',
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      'Accept': 'text/html',
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: JSON.stringify(body),
+    body: `login=${body.login}&password=${body.password}&repair=false&mv=1`,
   };
 
   return await fetch(url, reqOpts);
@@ -55,3 +62,12 @@ export async function getUserName() {
 export async function getTest() {
   return getData(`/test?id=`);
 }
+
+export async function getTestInfo() {
+  return getData(`/test?id=`, '&request=info');
+}
+
+export async function getTestResult() {
+  return getData(`/test?id=`, '&request=results');
+}
+
