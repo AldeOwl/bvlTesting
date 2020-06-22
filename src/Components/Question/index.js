@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import {
   Wrap,
   Title,
@@ -21,12 +21,11 @@ class Question extends Component {
 
   componentDidMount() {
     this.setTimer(this.props.data.difficulty);
-    // setTimeout(this.props.nextQuestions, 10000);
-    this.timer = setInterval(() => this.setState({time: this.state.time - 1}), 1000);
+    this.timer = setInterval(() => this.setState({ time: this.state.time - 1 }), 1000);
   }
 
   componentDidUpdate(prevProps) {
-    if(prevProps.data.id !== this.props.data.id){
+    if (prevProps.data.id !== this.props.data.id) {
       this.setTimer(this.props.data.difficulty);
     }
   }
@@ -37,26 +36,25 @@ class Question extends Component {
 
   chooseAnswer = (id) => {
     let arr = [];
-    if (this.state.choose.includes(id)){
+    if (this.state.choose.includes(id)) {
       arr = this.state.choose.filter(item => item !== id);
-      this.setState({choose: arr});
+      this.setState({ choose: arr });
     } else {
       arr = [...this.state.choose];
       arr.push(id);
-     this.setState({choose: arr});
+      this.setState({ choose: arr });
     }
   }
 
   setTimer = (val) => {
-    if(val === 0) this.setState({time: 60});
-    if(val === 1) this.setState({time: 90});
-    if(val === 2) this.setState({time: 120});
+    if (val === 0) this.setState({ time: 60 });
+    if (val === 1) this.setState({ time: 90 });
+    if (val === 2) this.setState({ time: 120 });
   }
 
   nextHandler = () => {
     this.props.nextQuestions(this.state.choose);
-    this.setState({choose: []});
-    // clearInterval(this.timer);
+    this.setState({ choose: [] });
   }
 
   render() {
@@ -68,10 +66,10 @@ class Question extends Component {
       data,
     } = this.props;
 
-  if (!data) return false;
-  if(time === 0) this.nextHandler();
+    if (!data) return false;
+    if (time === 0) this.nextHandler();
 
-  return (
+    return (
       <Wrap>
         <TitleWrap>
           <Title>{data.text}</Title>
@@ -80,13 +78,13 @@ class Question extends Component {
         <AnswerWrap>
           {data.responses.map(item => {
             return (
-                <Answer
-                    key={item.id}
-                    active={choose.includes(item.response)}
-                    onClick={() => this.chooseAnswer(item.response)}
-                >
-                  <p>{item.response}</p>
-                </Answer>
+              <Answer
+                key={item.id}
+                active={choose.includes(item.response)}
+                onClick={() => this.chooseAnswer(item.response)}
+              >
+                <p>{item.response}</p>
+              </Answer>
             )
           })}
           <BtnRow>
@@ -96,7 +94,7 @@ class Question extends Component {
           </BtnRow>
         </AnswerWrap>
       </Wrap>
-  )
+    )
   }
 }
 

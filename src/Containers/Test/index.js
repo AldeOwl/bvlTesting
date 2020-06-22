@@ -7,6 +7,8 @@ import Question from '../../Components/Question';
 import Loader from '../../Components/Spinner/loader';
 
 class Test extends Component {
+  testTime = 0;
+  timer = {};
   state = {
     questions: [],
     answers: {},
@@ -17,6 +19,8 @@ class Test extends Component {
   componentDidMount() {
     getTest()
       .then(res => this.setState({ questions: [...res], isLoading: false }));
+    this.timer = setInterval(() => this.testTime++, 1000);
+
   }
 
   nextQuestions = (arr) => {
@@ -26,7 +30,9 @@ class Test extends Component {
     this.setState({ target: this.state.target + 1 });
 
     if (this.state.target === this.state.questions.length - 1) {
-      sendTestResult(this.state.answers);
+      const data = this.state.answers;
+      data.test_time = this.testTime;
+      sendTestResult(data);
     }
   }
 

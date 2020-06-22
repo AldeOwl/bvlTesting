@@ -26,7 +26,7 @@ export async function sendTestResult(body) {
   const reqOpts = {
     method: 'POST',
     headers: {
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
@@ -64,7 +64,12 @@ export async function getTest() {
 }
 
 export async function getTestInfo() {
-  return getData(`/test?id=`, '&request=info');
+  const url = checkUrl();
+  const res = await fetch(`${baseUrl}/test?id=${url}&request=info`);
+  if (!res.ok) {
+    throw new Error(`Could not fetch ${checkUrl()} ${res.status}`)
+  }
+  return res.text();
 }
 
 export async function getTestResult() {

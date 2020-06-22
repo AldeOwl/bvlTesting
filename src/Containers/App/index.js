@@ -4,7 +4,7 @@ import Login from '../../Components/Login';
 import Test from '../Test';
 import Introduction from '../../Components/Introduction';
 import Loader from '../../Components/Spinner/loader';
-import { getUserName, authorization, getTestInfo, getTestResult } from '../../network/index';
+import { getUserName, authorization, getTestResult } from '../../network/index';
 
 
 class App extends Component {
@@ -21,7 +21,6 @@ class App extends Component {
   componentDidMount() {
     this.getName();
     this.checkTestID();
-    getTestInfo().then(res => console.log(res))
     getTestResult().then(res => console.log(res))
   }
 
@@ -33,8 +32,12 @@ class App extends Component {
 
   getAuth = (e, body) => {
     e.preventDefault();
-    authorization(body);
-    this.getName();
+    authorization(body)
+      .then(res => {
+        if (res.status === 200) {
+          this.getName();
+        }
+      })
   }
 
   getName = () => {
@@ -60,6 +63,7 @@ class App extends Component {
     const {
       authorization,
       isLoading,
+      name,
       step,
       id,
     } = this.state;
@@ -70,7 +74,7 @@ class App extends Component {
       )
     }
 
-    if (!authorization) {
+    if (authorization) {
       return (
         <div className="App">
           <Login
@@ -81,10 +85,11 @@ class App extends Component {
     }
 
     return (
-      <div className="App">
+      <div className="App" >
 
         {step === 'start' && id === 231 &&
           < Introduction
+            name={name}
             setStep={this.stepHandler}
           />
         }

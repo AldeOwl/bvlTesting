@@ -30,7 +30,15 @@ export const RowInputWrap = styled.div`
     left: 0;
     color: ${props => props.theme.error};
     font-size: 12px;
-  }  
+  } 
+
+  input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus, 
+    input:-webkit-autofill:active  {
+      -webkit-box-shadow: 0 0 0 50px inset #fff !important;
+      -webkit-text-fill-color: #000 !important;
+    }
 `;
 
 export const InputLabel = styled.label`

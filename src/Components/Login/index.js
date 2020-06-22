@@ -30,14 +30,14 @@ class Login extends Component {
 
     return (
       <Wrap>
-        <form onSubmit={(e) => getAuth(e, { login: username, password: pass })}>
+        <form onSubmit={(e) => getAuth(e, { login: username, password: pass })} autoComplete='off'>
           <RowInputWrap>
             <Input
               type="text"
               name="login"
               id='login'
               value={username}
-              autoComplete={'no'}
+              autoComplete='off'
               onChange={e => this.inputHandler('username', e.target.value)}
             />
             <InputLabel htmlFor="login">Логин</InputLabel>

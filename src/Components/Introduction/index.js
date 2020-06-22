@@ -7,11 +7,36 @@ import {
   BtnRow,
   NextBtn,
 } from "./style";
+import Loader from '../../Components/Spinner/loader';
+import { getTestInfo } from '../../network';
 
 
 class Introduction extends Component {
   state = {
     page: 1,
+    pages: [],
+  }
+
+  componentDidMount() {
+    getTestInfo()
+      .then(res => {
+        let arr = res.split('-----');
+        this.parsePages(arr);
+      })
+  }
+
+  parsePages = (arr) => {
+    const formatPages = [];
+    arr.forEach(item => {
+      const obj = {};
+      if ((/===.+?===/).exec(item)) {
+        obj.button = (/===.+?===/).exec(item)[0];
+        obj.button = obj.button.replace(/=/g, '');
+        obj.text = item.replace(/===.+?===/g, '');
+        formatPages.push(obj);
+      }
+    })
+    this.setState({ pages: formatPages });
   }
 
   nextHandler = () => {
@@ -22,29 +47,40 @@ class Introduction extends Component {
   render() {
     const {
       page,
+      pages,
     } = this.state;
+
+    const {
+      name
+    } = this.props;
+
+    if (pages.length === 0) {
+      return (
+        <Loader />
+      )
+    }
 
     return (
       <Wrap>
-        {page === 1 &&
-          <Content>
-            <TextTitle>
-              Привет, ИМЯ
-        </TextTitle>
-            <Text>
+
+        <Content>
+          <Text>
+            {pages[page - 1].text.replace(/\[Name\]/g, name)}
+          </Text>
+          {/* <Text>
               В 2020 году Береговая Волейбольная Лига отмечает юбилей. 25 лет мы организуем турниры и события для любителей волейбола со всего мира. А насколько хорошо ты знаешь лигу?
           </Text>
             <Text>
               В ожидании снятия ограничительных мер связанных с COVID-19 по проведению массовых мероприятий мы предлагаем тебе принят участие в викторине «БВЛ от начала времен и до наших дней» и проверить свои знания, интуицию и чувство юмора. И не просто предлагаем, а еще и подарим подарки, если ты не будешь часто ошибаться.
-          </Text>
-            <BtnRow>
-              <NextBtn onClick={this.nextHandler}>
-                Круто, я в деле!
+          </Text> */}
+          <BtnRow>
+            <NextBtn onClick={this.nextHandler}>
+              {pages[page - 1].button}
             </NextBtn>
-            </BtnRow>
-          </Content>
-        }
-        {page === 2 &&
+          </BtnRow>
+        </Content>
+
+        {/* {page === 2 &&
           <Content>
             <Text>
               Прежде чем начать отвечать на вопросы, внимательно прочитай наши подсказки:
@@ -97,7 +133,7 @@ class Introduction extends Component {
             </NextBtn>
             </BtnRow>
           </Content>
-        }
+        } */}
       </Wrap>
     )
   }
