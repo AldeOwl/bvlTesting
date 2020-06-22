@@ -23,6 +23,10 @@ class Test extends Component {
 
   }
 
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
   nextQuestions = (arr) => {
     const newAnswers = this.state.answers;
     newAnswers[this.state.questions[this.state.target].id] = arr;

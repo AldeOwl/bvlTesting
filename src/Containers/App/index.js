@@ -74,7 +74,7 @@ class App extends Component {
       )
     }
 
-    if (authorization) {
+    if (!authorization) {
       return (
         <div className="App">
           <Login
