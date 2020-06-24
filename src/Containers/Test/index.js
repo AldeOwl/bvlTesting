@@ -84,7 +84,7 @@ class Test extends Component {
             <Title>тест завершен</Title>
             <p>{result.points} баллов ({result.percent} %)</p>
             <p>Время: {(result.testTime / 60).toFixed(0)} мин. {(result.testTime - (result.testTime / 60).toFixed(0) * 60)} сек.</p>
-            <Message>{this.getMessage(result.points)}</Message>
+            {result.id === 231 && <Message>{this.getMessage(result.points)}</Message>}
             <Detail href={result.report} target='_blanck'>
               ДЕТАЛИЗАЦИЯ
             </Detail>

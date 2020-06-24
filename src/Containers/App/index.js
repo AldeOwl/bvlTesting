@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Switch, Route } from 'react-router-dom';
 import './style.css';
 import Login from '../../Components/Login';
 import Test from '../Test';
@@ -74,7 +75,7 @@ class App extends Component {
       )
     }
 
-    if (!authorization) {
+    if (authorization) {
       return (
         <div className="App">
           <Login
@@ -86,16 +87,25 @@ class App extends Component {
 
     return (
       <div className="App" >
-
-        {step === 'start' && id === 231 &&
-          < Introduction
-            name={name}
-            setStep={this.stepHandler}
+        <Switch>
+          <Route path='/result'>
+            < Test />
+          </Route>
+          <Route
+            exact
+            path='/'
+            render={(routeProps) =>
+              <Introduction
+                history={routeProps.history}
+                name={name}
+                setStep={this.stepHandler}
+              />
+            }
           />
-        }
-        {step === 'test' &&
-          < Test />
-        }
+          <Route path='/test'>
+            < Test />
+          </Route>
+        </Switch>
       </div>
     );
   }
