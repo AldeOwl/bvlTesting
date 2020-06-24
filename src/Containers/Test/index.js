@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {
   EndTest,
+  Title,
+  Message,
+  Detail,
 } from './style';
 import { getTest, sendTestResult } from '../../network/index';
 import Question from '../../Components/Question';
@@ -14,6 +17,16 @@ class Test extends Component {
     answers: {},
     target: 0,
     isLoading: true,
+    result: {
+      "id": 0,
+      "player": 5118,
+      "test": 231,
+      "points": 0.0,
+      "testTime": 134,
+      "percent": 0,
+      "report": "https://myvolley.ru/api/test?request\u003ddetail\u0026test\u003d231\u0026player\u003d5118",
+      "league": 1
+    },
   }
 
   componentDidMount() {
@@ -36,8 +49,18 @@ class Test extends Component {
     if (this.state.target === this.state.questions.length - 1) {
       const data = this.state.answers;
       data.test_time = this.testTime;
-      sendTestResult(data);
+      this.setState({ isLoading: true })
+      sendTestResult(data)
+        .then(res => this.setState({ result: res, isLoading: false }))
     }
+  }
+
+  getMessage = (points) => {
+    if (points === 25) return 'Алексей Беленький, ты в курсе, что президенту нельзя отвечать на вопросы?';
+    if (points > 19 && points < 25) return 'Да ты крутой! Наверное играешь в БВЛ лет двадцать?';
+    if (points > 14 && points < 20) return 'Неплохо, но тебе стоит побольше узнать о БВЛ. Придет время - пригодится.';
+    if (points > 9 && points < 15) return 'Мы ожидали от тебя больше. Похоже, что ты просто приезжаешь к началу игр и не задерживаешься потом? ';
+    if (points < 10) return 'Эй, а ты точно из БВЛ?';
   }
 
   render() {
@@ -45,6 +68,7 @@ class Test extends Component {
       questions,
       target,
       isLoading,
+      result,
     } = this.state;
 
     if (isLoading) {
@@ -53,11 +77,17 @@ class Test extends Component {
       )
     }
 
-    if (target === questions.length) {
+    if (target === questions.length && !isLoading) {
       return (
         <div className="App">
           <EndTest>
-            <p>тест завершен</p>
+            <Title>тест завершен</Title>
+            <p>{result.points} баллов ({result.percent} %)</p>
+            <p>Время: {(result.testTime / 60).toFixed(0)} мин. {(result.testTime - (result.testTime / 60).toFixed(0) * 60)} сек.</p>
+            <Message>{this.getMessage(result.points)}</Message>
+            <Detail href={result.report} target='_blanck'>
+              ДЕТАЛИЗАЦИЯ
+            </Detail>
           </EndTest>
         </div>
       )
