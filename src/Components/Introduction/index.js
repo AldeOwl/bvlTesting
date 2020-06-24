@@ -3,7 +3,6 @@ import {
   Wrap,
   Content,
   Text,
-  TextTitle,
   BtnRow,
   NextBtn,
 } from "./style";

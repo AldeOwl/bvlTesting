@@ -5,7 +5,7 @@ import Login from '../../Components/Login';
 import Test from '../Test';
 import Introduction from '../../Components/Introduction';
 import Loader from '../../Components/Spinner/loader';
-import { getUserName, authorization, getTestResult } from '../../network/index';
+import { getUserName, authorization } from '../../network/index';
 
 
 class App extends Component {
@@ -13,7 +13,6 @@ class App extends Component {
     authorization: false,
     isLoading: false,
     name: null,
-    step: 'start',
     id: '',
     startTime: null,
     endTime: null,
@@ -22,7 +21,6 @@ class App extends Component {
   componentDidMount() {
     this.getName();
     this.checkTestID();
-    getTestResult().then(res => console.log(res))
   }
 
   checkTestID = () => {
@@ -65,8 +63,6 @@ class App extends Component {
       authorization,
       isLoading,
       name,
-      step,
-      id,
     } = this.state;
 
     if (isLoading) {
