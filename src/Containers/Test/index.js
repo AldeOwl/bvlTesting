@@ -17,16 +17,7 @@ class Test extends Component {
     answers: {},
     target: 0,
     isLoading: true,
-    result: {
-      "id": 0,
-      "player": 5118,
-      "test": 231,
-      "points": 0.0,
-      "testTime": 134,
-      "percent": 0,
-      "report": "https://myvolley.ru/api/test?request\u003ddetail\u0026test\u003d231\u0026player\u003d5118",
-      "league": 1
-    },
+    result: {},
   }
 
   componentDidMount() {
@@ -51,7 +42,11 @@ class Test extends Component {
       data.test_time = this.testTime;
       this.setState({ isLoading: true })
       sendTestResult(data)
-        .then(res => this.setState({ result: res, isLoading: false }))
+        .then(res => {
+          console.log(res);
+          this.setState({ result: res, isLoading: false })
+        }
+        )
     }
   }
 

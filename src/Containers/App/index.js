@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import './style.css';
 import Login from '../../Components/Login';
-import Test from '../Test';
-import Introduction from '../../Components/Introduction';
+import TestWrap from '../../Components/TestWrap';
+import Result from '../Results';
 import Loader from '../../Components/Spinner/loader';
 import { getUserName, authorization } from '../../network/index';
 
@@ -35,6 +35,7 @@ class App extends Component {
       .then(res => {
         if (res.status === 200) {
           this.getName();
+          this.props.history.push('/');
         }
       })
   }
@@ -50,14 +51,6 @@ class App extends Component {
       })
   }
 
-  getStartTime = () => {
-
-  }
-
-  stepHandler = (step) => {
-    this.setState({ step: step });
-  }
-
   render() {
     const {
       authorization,
@@ -71,40 +64,34 @@ class App extends Component {
       )
     }
 
-    if (authorization) {
-      return (
-        <div className="App">
-          <Login
-            getAuth={this.getAuth}
-          />
-        </div>
-      )
-    }
-
     return (
       <div className="App" >
-        <Switch>
-          <Route path='/result'>
-            < Test />
-          </Route>
-          <Route
-            exact
-            path='/'
-            render={(routeProps) =>
-              <Introduction
-                history={routeProps.history}
-                name={name}
-                setStep={this.stepHandler}
+        {!authorization ?
+          <Switch>
+            <Route path='/result'>
+              < Result />
+            </Route>
+            <Route>
+              <Login
+                getAuth={this.getAuth}
               />
-            }
-          />
-          <Route path='/test'>
-            < Test />
-          </Route>
-        </Switch>
+            </Route>
+          </Switch>
+          :
+          <Switch>
+            <Route path='/result'>
+              < Result />
+            </Route>
+            <Route>
+              < TestWrap
+                name={name}
+              />
+            </Route>
+          </Switch>
+        }
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

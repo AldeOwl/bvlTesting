@@ -32,7 +32,9 @@ export async function sendTestResult(body) {
     body: JSON.stringify(body),
   };
 
-  return await fetch(url, reqOpts);
+  const res = await fetch(url, reqOpts);
+
+  return res.json();
 
 };
 
@@ -43,6 +45,7 @@ export async function authorization(body) {
     headers: {
       'Accept': 'text/html',
       'Content-Type': 'application/x-www-form-urlencoded',
+      'Cookie': 'bvl.login="davnsk777@gmail.com"; bvl.password=dd7294a1974a7e1f57d943b4c98fb167; JSESSIONID=D4964308C0E23F51B286BAA51FAE6C67'
     },
     body: `login=${body.login}&password=${body.password}&repair=false&mv=1`,
   };

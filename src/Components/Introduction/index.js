@@ -39,7 +39,7 @@ class Introduction extends Component {
   }
 
   nextHandler = () => {
-    if (this.state.page === this.state.pages.length) this.props.history.push('/test');
+    if (this.state.page === this.state.pages.length) this.props.setStep('test');
     this.setState({ page: this.state.page + 1 });
   }
 
