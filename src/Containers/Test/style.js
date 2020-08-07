@@ -14,6 +14,11 @@ export const EndTest = styled.div`
   p{
     text-align: center;
     font-weight: bold;
+    span {
+      font-family: Nova;
+      color: #f7aa41;
+      font-size: 25px;
+    }
   }
 `;
 

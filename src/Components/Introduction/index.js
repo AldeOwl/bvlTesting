@@ -43,6 +43,10 @@ class Introduction extends Component {
     this.setState({ page: this.state.page + 1 });
   }
 
+  setText(val) {
+    return { __html: val };
+  }
+
   render() {
     const {
       page,
@@ -63,8 +67,7 @@ class Introduction extends Component {
       <Wrap>
 
         <Content>
-          <Text>
-            {pages[page - 1].text.replace(/\[Name\]/g, name)}
+          <Text dangerouslySetInnerHTML={this.setText(pages[page - 1].text.replace(/\[Name\]/g, name))}>
           </Text>
           <BtnRow>
             <NextBtn onClick={this.nextHandler}>

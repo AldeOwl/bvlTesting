@@ -22,6 +22,11 @@ code {
   src: url('./fonts/open-sans-v17-latin_cyrillic-regular.woff2') format('woff2');
   font-weight: normal;
 }
+@font-face {
+  font-family: Nova;
+  src: url('./fonts/DS-DIGI.TTF');
+  font-weight: normal;
+}
 
 h1, h2, h3, h4 {
   font-family: 'Bebas', sans-serif;
