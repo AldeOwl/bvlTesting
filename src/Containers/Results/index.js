@@ -1,12 +1,4 @@
 import React, { Component } from 'react';
-import {
-  EndTest,
-  Title,
-  Message,
-  Detail,
-} from './style';
-import { sendTestResult } from '../../network/index';
-import Question from '../../Components/Question';
 import Loader from '../../Components/Spinner/loader';
 
 class Result extends Component {

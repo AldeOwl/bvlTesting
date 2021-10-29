@@ -65,7 +65,6 @@ class Introduction extends Component {
 
     return (
       <Wrap>
-
         <Content>
           <Text dangerouslySetInnerHTML={this.setText(pages[page - 1].text.replace(/\[Name\]/g, name))}>
           </Text>

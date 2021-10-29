@@ -43,9 +43,7 @@ export async function authorization(body) {
   const reqOpts = {
     method: 'POST',
     headers: {
-      'Accept': 'text/html',
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Cookie': 'bvl.login="davnsk777@gmail.com"; bvl.password=dd7294a1974a7e1f57d943b4c98fb167; JSESSIONID=D4964308C0E23F51B286BAA51FAE6C67'
     },
     body: `login=${body.login}&password=${body.password}&repair=false&mv=1`,
   };

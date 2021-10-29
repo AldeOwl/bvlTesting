@@ -43,7 +43,6 @@ class Test extends Component {
       this.setState({ isLoading: true })
       sendTestResult(data)
         .then(res => {
-          console.log(res);
           this.setState({ result: res, isLoading: false })
         }
         )

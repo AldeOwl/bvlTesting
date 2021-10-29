@@ -1,13 +1,16 @@
 import styled from "styled-components";
 
 export const Wrap = styled.div`
-  width: 800px;
+  max-width: 800px;
+  min-width: 250px;
+  width: 100%;
   min-height: 200px;
   padding: 16px;
   display: flex;
   flex-direction: column;
   background-color: #fff;
   border-radius: 4px;
+  box-sizing: border-box;
 `;
 
 export const Content = styled.div`
@@ -18,6 +21,9 @@ export const Content = styled.div`
 export const Text = styled.p`
   margin: 16px;
   font-size: 18px;
+  @media(max-width: 500px) {
+    text-align: center;
+  }
 `;
 
 export const TextTitle = styled.h1`
@@ -29,6 +35,9 @@ export const BtnRow = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  @media(max-width: 500px) {
+    justify-content: center;
+  }
 `;
 
 export const NextBtn = styled.button`

@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const Wrap = styled.div`
-  width: 700px;
+  max-width: 700px;
+  min-width: 250px;
   min-height: 400px;
   padding: 16px;
   display: flex;
@@ -60,6 +61,9 @@ export const BtnRow = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  @media(max-width: 500px){
+    justify-content: center;
+  }
 `;
 
 export const NextBtn = styled.button`

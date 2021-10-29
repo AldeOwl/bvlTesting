@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Switch, Route, withRouter} from 'react-router-dom';
 import './style.css';
 import Login from '../../Components/Login';
 import TestWrap from '../../Components/TestWrap';
 import Result from '../Results';
 import Loader from '../../Components/Spinner/loader';
-import { getUserName, authorization } from '../../network/index';
+import {getUserName, authorization} from '../../network/index';
 
 
 class App extends Component {
@@ -26,7 +26,7 @@ class App extends Component {
   checkTestID = () => {
     let searchParams = new URLSearchParams(window.location.search);
     let id = searchParams.get('id');
-    this.setState({ id: parseInt(id) });
+    this.setState({id: parseInt(id)});
   }
 
   getAuth = (e, body) => {
@@ -43,10 +43,10 @@ class App extends Component {
   getName = () => {
     getUserName()
       .then(res => {
-        if (res.user) {
-          this.setState({ authorization: true, name: res.user, isLoading: false });
+        if (res.id) {
+          this.setState({authorization: true, name: res.name, isLoading: false});
         } else {
-          this.setState({ isLoading: false });
+          this.setState({isLoading: false});
         }
       })
   }

@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 export const EndTest = styled.div`
-  width: 500px;
-  height: 250px;
+  max-width: 500px;
+  min-width: 250px;
+  min-height: 250px;
   padding: 12px;
   display: flex;
   flex-direction: column;
