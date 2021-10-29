@@ -22,13 +22,16 @@ export const Text = styled.p`
   margin: 16px;
   font-size: 18px;
   @media(max-width: 500px) {
-    text-align: center;
+    font-size: 16px;
   }
 `;
 
 export const TextTitle = styled.h1`
   margin: 16px;
   font-size: 25px;
+  @media(max-width: 500px) {
+    font-size: 20px;
+  }
 `;
 
 export const BtnRow = styled.div`

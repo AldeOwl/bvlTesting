@@ -21,6 +21,9 @@ export const Title = styled.p`
   max-width: 90%;
   margin: 0 0 10px 0;
   font-size: 20px;
+  @media(max-width: 500px) {
+    font-size: 18px;
+  }
 `;
 
 export const Time = styled.p`
@@ -54,6 +57,9 @@ export const Answer = styled.div`
   p {
     margin: 0;
     color: #fff;
+    @media(max-width: 500px) {
+      font-size: 14px;
+    }
   }
 `;
 
