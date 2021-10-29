@@ -66,7 +66,7 @@ class App extends Component {
 
     return (
       <div className="App" >
-        {authorization ?
+        {!authorization ?
           <Switch>
             <Route path='/result'>
               < Result />
