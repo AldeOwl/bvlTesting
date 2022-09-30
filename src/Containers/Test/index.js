@@ -32,8 +32,8 @@ class Test extends Component {
   }
 
   nextQuestions = (arr) => {
-    const newAnswers = this.state.answers;
-    newAnswers[this.state.questions[this.state.target].id] = arr;
+    const newAnswers = {...this.state.answers};
+    newAnswers[this.state.questions[this.state.target].id] = [...arr];
     this.setState({ answers: newAnswers });
     this.setState({ target: this.state.target + 1 });
 
@@ -45,7 +45,7 @@ class Test extends Component {
         .then(res => {
           this.setState({ result: res, isLoading: false })
         }
-        )
+        ).finally(() => this.setState({ isLoading: false }))
     }
   }
 
@@ -76,12 +76,18 @@ class Test extends Component {
         <div className="App">
           <EndTest>
             <Title>тест завершен</Title>
-            <p>{result.points} баллов ({result.percent} %)</p>
-            <p>Время: <span>{(result.testTime / 60).toFixed(0)}</span> мин. <span>{(result.testTime - (result.testTime / 60).toFixed(0) * 60)}</span> сек.</p>
+            {result.points &&
+              <p>{result.points} баллов ({result.percent} %)</p>
+            }
+            {result.testTime &&
+              <p>Время: <span>{(result.testTime / 60).toFixed(0)}</span> мин. <span>{(result.testTime - (result.testTime / 60).toFixed(0) * 60)}</span> сек.</p>
+            }
             {result.test === 231 && <Message>{this.getMessage(result.points)}</Message>}
+            {result.report &&
             <Detail href={result.report} target='_blanck'>
               ДЕТАЛИЗАЦИЯ
             </Detail>
+            }
           </EndTest>
         </div>
       )

@@ -67,7 +67,11 @@ class Question extends Component {
     } = this.props;
 
     if (!data) return false;
-    if (time === 0) this.nextHandler();
+    if (time === 0) {
+      this.setState({ time: -1 })
+      this.nextHandler();
+    }
+
 
     return (
       <Wrap>

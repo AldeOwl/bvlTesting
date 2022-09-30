@@ -10,7 +10,7 @@ import Loader from '../../Components/Spinner/loader';
 import { getTestInfo } from '../../network';
 
 
-class Introduction extends Component {
+class   Introduction extends Component {
   state = {
     page: 1,
     pages: [],
