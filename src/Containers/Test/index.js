@@ -22,7 +22,9 @@ class Test extends Component {
 
   componentDidMount() {
     getTest()
-      .then(res => this.setState({ questions: [...res], isLoading: false }));
+      .then(res => {
+        this.setState({ questions: [...res], isLoading: false })
+      });
     this.timer = setInterval(() => this.testTime++, 1000);
 
   }
@@ -32,16 +34,16 @@ class Test extends Component {
   }
 
   nextQuestions = (arr) => {
-    const newAnswers = {...this.state.answers};
+    const newAnswers = {...this.state.answers}; 
+    const newTarget = this.state.target + 1
     newAnswers[this.state.questions[this.state.target].id] = [...arr];
     this.setState({ answers: newAnswers });
-    this.setState({ target: this.state.target + 1 });
+    this.setState({ target: newTarget });
 
-    if (this.state.target === this.state.questions.length - 1) {
-      const data = this.state.answers;
-      data.test_time = this.testTime;
+    if (newTarget === this.state.questions.length) {
+      newAnswers.test_time = this.testTime;
       this.setState({ isLoading: true })
-      sendTestResult(data)
+      sendTestResult(newAnswers)
         .then(res => {
           this.setState({ result: res, isLoading: false })
         }
@@ -70,6 +72,8 @@ class Test extends Component {
         <Loader />
       )
     }
+    console.log('target', target);
+    console.log('question length', questions.length);
 
     if (target === questions.length && !isLoading) {
       return (
