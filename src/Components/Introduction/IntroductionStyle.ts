@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Wrap = styled.div`
   max-width: 800px;
@@ -11,37 +11,37 @@ export const Wrap = styled.div`
   background-color: #fff;
   border-radius: 4px;
   box-sizing: border-box;
-`;
+`
 
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-`;
+`
 
 export const Text = styled.p`
   margin: 16px;
   font-size: 18px;
-  @media(max-width: 500px) {
+  @media (max-width: 500px) {
     font-size: 16px;
   }
-`;
+`
 
 export const TextTitle = styled.h1`
   margin: 16px;
   font-size: 25px;
-  @media(max-width: 500px) {
+  @media (max-width: 500px) {
     font-size: 20px;
   }
-`;
+`
 
 export const BtnRow = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  @media(max-width: 500px) {
+  @media (max-width: 500px) {
     justify-content: center;
   }
-`;
+`
 
 export const NextBtn = styled.button`
   min-width: 225px;
@@ -56,9 +56,8 @@ export const NextBtn = styled.button`
   border-radius: 4px;
   outline: none;
   cursor: pointer;
-  transition: all .2s linear;
+  transition: all 0.2s linear;
   :hover {
-     background-color: #b37017;
+    background-color: #b37017;
   }
-`;
-
+`

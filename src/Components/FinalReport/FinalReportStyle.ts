@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const EndTest = styled.div`
   max-width: 500px;
@@ -12,7 +12,7 @@ export const EndTest = styled.div`
   background-color: #fff;
   border-radius: 8px;
 
-  p{
+  p {
     text-align: center;
     font-weight: bold;
     span {
@@ -21,19 +21,7 @@ export const EndTest = styled.div`
       font-size: 25px;
     }
   }
-`;
-
-export const Title = styled.h1`
-  color: #f7aa41;
-  font-size: 25px;
-  text-align: center;
-`;
-
-export const Message = styled.span`
-  font-size: 18px;
-  text-align: center;
-  font-weight: bold;
-`;
+`
 
 export const Detail = styled.a`
   width: 200px;
@@ -48,4 +36,16 @@ export const Detail = styled.a`
   font-family: 'Bebas', sans-serif;
   border-radius: 8px;
   text-decoration: none;
-`;
+`
+
+export const Title = styled.h1`
+  color: #f7aa41;
+  font-size: 25px;
+  text-align: center;
+`
+
+export const Message = styled.span`
+  font-size: 18px;
+  text-align: center;
+  font-weight: bold;
+`
