@@ -21,6 +21,17 @@ export const EndTest = styled.div`
       font-size: 25px;
     }
   }
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    span {
+      margin-top: 20px;
+      color: grey;
+      cursor: pointer;
+    }
+  }
 `
 
 export const Title = styled.h1`

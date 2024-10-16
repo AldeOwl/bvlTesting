@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useCallback} from 'react'
 
 import {EndTest, Title, SaveButton} from './TestItemStyle'
 import {getTest, sendTestResult} from '../../network/index'
 import Question from '../../Components/Question/Question'
 import Loader from '../../Components/Spinner/loader'
 import FinalReport from '../../Components/FinalReport/FinalReport'
+import {useNavigate} from 'react-router'
 
 interface Response {
   id: number
@@ -33,7 +34,12 @@ const Test: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [result, setResult] = useState<ResultType>({})
   const [testTime, setTestTime] = useState<number>(0)
-  const [testError, setTestError] = useState(false)
+  const [saveTestError, setSaveTestError] = useState(false)
+  const [showTestError, setShowTestError] = useState(false)
+  const [testError, setTestError] = useState('')
+  const [pageWasLeft, setPageWasLeft] = useState(false)
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchTest = async () => {
@@ -49,11 +55,40 @@ const Test: React.FC = () => {
     return () => clearInterval(timer)
   }, [])
 
+  const handleVisibilityChange = useCallback(
+    (isHidden: boolean) => {
+      if (isHidden && !pageWasLeft) {
+        setPageWasLeft(true)
+      }
+      if (!isHidden && pageWasLeft) {
+        alert(
+          'Тестирование отменено. ВНИМАНИЕ! Не закрывайте окно и не переключатель между вкладками браузера при прохождении тестирования'
+        )
+        setPageWasLeft(false)
+        navigate('/')
+      }
+    },
+    [pageWasLeft]
+  )
+
+  useEffect(() => {
+    const handleVisibilityChangeEvent = () => {
+      handleVisibilityChange(document.hidden)
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChangeEvent)
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChangeEvent)
+    }
+  }, [handleVisibilityChange])
+
   const handleSaveTest = (answers: Record<string, string[] | number>) => {
+    setSaveTestError(false)
     sendTestResult(answers)
       .then((res) => {
         if (!res.id) {
-          setTestError(true)
+          setSaveTestError(true)
           console.log('error', res)
           return
         }
@@ -61,7 +96,8 @@ const Test: React.FC = () => {
         setIsLoading(false)
       })
       .catch((e) => {
-        setTestError(true), console.log('error', e)
+        setSaveTestError(true), setTestError(e)
+        console.log('error', e)
       })
       .finally(() => setIsLoading(false))
   }
@@ -90,12 +126,16 @@ const Test: React.FC = () => {
   if (isLoading) {
     return <Loader />
   }
-  if (testError) {
+  if (saveTestError) {
     return (
       <div className="App">
         <EndTest>
           <Title>Ошибка сохранения теста</Title>
-          <SaveButton onClick={handleSaveButton}>сохранить повторно</SaveButton>
+          <div>
+            <SaveButton onClick={handleSaveButton}>сохранить повторно</SaveButton>
+            {testError && <span onClick={() => setShowTestError(true)}>Показать ошибку</span>}
+            {showTestError && <p>{JSON.stringify(testError)}</p>}
+          </div>
         </EndTest>
       </div>
     )
