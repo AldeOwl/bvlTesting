@@ -28,10 +28,6 @@ const App = () => {
 
   useEffect(() => {
     getName()
-    const interval = setInterval(getName, 60000)
-    return () => {
-      clearInterval(interval)
-    }
   }, [])
 
   const authHandler = (e: React.FormEvent, body: {login: string; password: string}) => {

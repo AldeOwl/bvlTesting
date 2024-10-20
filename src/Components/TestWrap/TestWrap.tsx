@@ -1,8 +1,9 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 import {Wrap} from './TestWrapStyle'
 import Test from '../../Containers/Test/TestItem'
 import Introduction from '../Introduction/Introduction'
+import {getUserName} from '../../network'
 
 interface TestWrapProps {
   name: string
@@ -17,6 +18,13 @@ const TestWrap: React.FC<TestWrapProps> = ({name, authorization}) => {
     window.location.reload()
     return null
   }
+
+  useEffect(() => {
+    const interval = setInterval(getUserName, 60000)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
 
   return (
     <Wrap>
