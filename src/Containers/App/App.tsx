@@ -14,8 +14,24 @@ const App = () => {
 
   const navigate = useNavigate()
 
+  const getName = () => {
+    getUserName().then((res) => {
+      if (res.id) {
+        setAuthorization(true)
+        setName(res.name)
+        setIsLoading(false)
+      } else {
+        setIsLoading(false)
+      }
+    })
+  }
+
   useEffect(() => {
     getName()
+    const interval = setInterval(getName, 60000)
+    return () => {
+      clearInterval(interval)
+    }
   }, [])
 
   const authHandler = (e: React.FormEvent, body: {login: string; password: string}) => {
@@ -31,18 +47,6 @@ const App = () => {
         }
       })
     }
-  }
-
-  const getName = () => {
-    getUserName().then((res) => {
-      if (res.id) {
-        setAuthorization(true)
-        setName(res.name)
-        setIsLoading(false)
-      } else {
-        setIsLoading(false)
-      }
-    })
   }
 
   if (isLoading) {

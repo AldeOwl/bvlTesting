@@ -89,6 +89,7 @@ const Test: React.FC = () => {
       .then((res) => {
         if (!res.id) {
           setSaveTestError(true)
+          setTestError(res)
           console.log('error', res)
           return
         }
@@ -96,7 +97,8 @@ const Test: React.FC = () => {
         setIsLoading(false)
       })
       .catch((e) => {
-        setSaveTestError(true), setTestError(e)
+        setSaveTestError(true)
+        setTestError(e)
         console.log('error', e)
       })
       .finally(() => setIsLoading(false))
