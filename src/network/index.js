@@ -7,8 +7,8 @@ const checkUrl = () => {
 }
 
 async function getData(url, param) {
-  const request = param ? `${baseUrl}${url}${id}${param}` : `${baseUrl}${url}${id}`
   const id = checkUrl()
+  const request = param ? `${baseUrl}${url}${id}${param}` : `${baseUrl}${url}${id}`
 
   const res = await fetch(request)
   if (!res.ok) {
