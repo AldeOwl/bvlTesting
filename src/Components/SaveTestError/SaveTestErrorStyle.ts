@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const EndTest = styled.div`
+export const ErrorWrapper = styled.div`
   max-width: 500px;
   min-width: 250px;
   min-height: 250px;

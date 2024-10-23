@@ -27,7 +27,7 @@ const Question: React.FC<QuestionProps> = ({data, nextQuestions}) => {
     const timerInterval = setInterval(() => setTime((prevTime) => prevTime - 1), 1000)
 
     return () => clearInterval(timerInterval)
-  }, [data.id])
+  }, [data.difficulty])
 
   useEffect(() => {
     if (time === 0) {

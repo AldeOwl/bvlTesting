@@ -1,11 +1,9 @@
-import React, {useEffect, useState, useCallback} from 'react'
+import React, {FC, useEffect, useState, useCallback} from 'react'
+import {useNavigate} from 'react-router'
 
-import {EndTest, Title, SaveButton} from './TestItemStyle'
-import {getTest, sendTestResult} from '../../network/index'
+import {getTest} from '../../network/index'
 import Question from '../../Components/Question/Question'
 import Loader from '../../Components/Spinner/loader'
-import FinalReport from '../../Components/FinalReport/FinalReport'
-import {useNavigate} from 'react-router'
 
 interface Response {
   id: number
@@ -19,25 +17,19 @@ interface QuestionType {
   responses: Response[]
 }
 
-interface ResultType {
-  points?: number
-  percent?: number
-  testTime?: number
-  test?: number
-  report?: string
+type TestProps = {
+  loadingHandler: (loading: boolean) => void
+  handleAnswer: (questionId: number, answers: Array<string>) => void
+  handleTestEndded: () => void
 }
 
-const Test: React.FC = () => {
+const TestItem: FC<TestProps> = (props) => {
+  const {loadingHandler, handleAnswer, handleTestEndded} = props
+
   const [questions, setQuestions] = useState<QuestionType[]>([])
-  const [answers, setAnswers] = useState<Record<string, string[] | number>>({})
   const [target, setTarget] = useState<number>(0)
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [result, setResult] = useState<ResultType>({})
-  const [testTime, setTestTime] = useState<number>(0)
-  const [saveTestError, setSaveTestError] = useState(false)
-  const [showTestError, setShowTestError] = useState(false)
-  const [testError, setTestError] = useState('')
   const [pageWasLeft, setPageWasLeft] = useState(false)
+  const [isTestLoading, setIsTestLoading] = useState(true)
 
   const navigate = useNavigate()
 
@@ -45,14 +37,10 @@ const Test: React.FC = () => {
     const fetchTest = async () => {
       const res = await getTest()
       setQuestions(res)
-      setIsLoading(false)
+      setIsTestLoading(false)
     }
 
     fetchTest()
-
-    const timer = setInterval(() => setTestTime((prev) => prev + 1), 1000)
-
-    return () => clearInterval(timer)
   }, [])
 
   const handleVisibilityChange = useCallback(
@@ -83,71 +71,26 @@ const Test: React.FC = () => {
     }
   }, [handleVisibilityChange])
 
-  const handleSaveTest = (answers: Record<string, string[] | number>) => {
-    setSaveTestError(false)
-    sendTestResult(answers)
-      .then((res) => {
-        if (!res.id) {
-          setSaveTestError(true)
-          setTestError(res)
-          console.log('error', res)
-          return
-        }
-        setResult(res)
-        setIsLoading(false)
-      })
-      .catch((e) => {
-        setSaveTestError(true)
-        setTestError(e)
-        console.log('error', e)
-      })
-      .finally(() => setIsLoading(false))
-  }
+  const nextQuestions = useCallback(
+    (arr: Array<string>) => {
+      const newTarget = target + 1
 
-  const nextQuestions = (arr: string[]) => {
-    const newAnswers = {...answers}
-    const newTarget = target + 1
-    newAnswers[questions[target].id] = [...arr]
-    setAnswers(newAnswers)
-    setTarget(newTarget)
+      handleAnswer(questions[target].id, arr)
+      setTarget(newTarget)
 
-    if (newTarget === questions.length) {
-      newAnswers.test_time = testTime
-      setIsLoading(true)
-      handleSaveTest(newAnswers)
-    }
-  }
+      if (newTarget === questions.length) {
+        loadingHandler(true)
+        handleTestEndded()
+      }
+    },
+    [handleAnswer, handleTestEndded, loadingHandler, questions, target]
+  )
 
-  const handleSaveButton = () => {
-    const currentAnswers = {...answers}
-    currentAnswers.test_time = testTime
-    setIsLoading(true)
-    handleSaveTest(currentAnswers)
-  }
-
-  if (isLoading) {
+  if (isTestLoading) {
     return <Loader />
-  }
-  if (saveTestError) {
-    return (
-      <div className="App">
-        <EndTest>
-          <Title>Ошибка сохранения теста</Title>
-          <div>
-            <SaveButton onClick={handleSaveButton}>сохранить повторно</SaveButton>
-            {testError && <span onClick={() => setShowTestError(true)}>Показать ошибку</span>}
-            {showTestError && <p>{JSON.stringify(testError)}</p>}
-          </div>
-        </EndTest>
-      </div>
-    )
-  }
-
-  if (target === questions.length && !isLoading) {
-    return <FinalReport result={result} />
   }
 
   return <Question data={questions[target]} nextQuestions={nextQuestions} />
 }
 
-export default Test
+export default TestItem
