@@ -54,6 +54,8 @@ const TestWrap: React.FC<TestWrapProps> = ({name, authorization}) => {
 
   const saveTest = useCallback(() => {
     if (!endTestTime) {
+      const testTimeMilissecond = new Date().getMilliseconds()
+      console.log('testTimeMilissecond', testTimeMilissecond)
       setEndTestTime(Date.now())
     }
 

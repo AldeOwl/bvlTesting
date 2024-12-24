@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from 'react'
-import {Wrap, Title, AnswerWrap, Answer, BtnRow, NextBtn, TitleWrap, Time} from './QuestionStyle'
+import React, {useState} from 'react'
+import {Wrap, Title, AnswerWrap, Answer, BtnRow, NextBtn, TitleWrap} from './QuestionStyle'
+import Timer from '../Timer/Timer'
 
 interface Response {
   id: number
@@ -19,33 +20,14 @@ interface QuestionProps {
 }
 
 const Question: React.FC<QuestionProps> = ({data, nextQuestions}) => {
+  const {id, difficulty} = data
+
   const [choose, setChoose] = useState<string[]>([])
-  const [time, setTime] = useState<number>(-1)
-
-  useEffect(() => {
-    setTimer(data.difficulty)
-    const timerInterval = setInterval(() => setTime((prevTime) => prevTime - 1), 1000)
-
-    return () => clearInterval(timerInterval)
-  }, [data.difficulty])
-
-  useEffect(() => {
-    if (time === 0) {
-      setTime(-1)
-      nextHandler()
-    }
-  }, [time])
 
   const chooseAnswer = (id: string) => {
     setChoose((prevChoose) =>
       prevChoose.includes(id) ? prevChoose.filter((item) => item !== id) : [...prevChoose, id]
     )
-  }
-
-  const setTimer = (val: number) => {
-    if (val === 0) setTime(60)
-    if (val === 1) setTime(90)
-    if (val === 2) setTime(120)
   }
 
   const nextHandler = () => {
@@ -59,7 +41,7 @@ const Question: React.FC<QuestionProps> = ({data, nextQuestions}) => {
     <Wrap>
       <TitleWrap>
         <Title>{data.text}</Title>
-        <Time>{time}</Time>
+        <Timer questionDifficulty={difficulty} questionId={id} nextQuestionHandler={nextHandler} />
       </TitleWrap>
       <AnswerWrap>
         {data.responses.map((item) => (
