@@ -43,7 +43,7 @@ const Timer: React.FC<TimerProps> = (props) => {
     nextQuestionHandler()
   }
 
-  questionDifficulty ?? null
+  if (!questionId) return null
 
   return (
     <div>
